@@ -31,7 +31,7 @@ public class SimpleDocument {
        
          
         XWPFDocument doc = new XWPFDocument();
-        doc.bodyElements.get(0).getPart().getPackagePart().
+        //doc.bodyElements.get(0).getPart().getPackagePart().
         XWPFParagraph p1 = doc.createParagraph();
         p1.setAlignment(ParagraphAlignment.CENTER);
         p1.setBorderBottom(Borders.DOUBLE);
