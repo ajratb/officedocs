@@ -1,0 +1,3 @@
+добавил файлы из примеров.
+поработал с 
+\org\apache\poi\xwpf\ SimpleDocument
