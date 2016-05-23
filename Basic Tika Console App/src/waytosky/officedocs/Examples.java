@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 public class Examples {
     public String parseToStringExample() throws IOException, SAXException, TikaException {
     Tika tika = new Tika();
-    try (InputStream stream = ParsingExample.class.getResourceAsStream("test.doc")) {
+    try (InputStream stream = ParsingExample.class.getResourceAsStream("SampleChapter-8.pdf")) {
         return tika.parseToString(stream);
     }
 }
