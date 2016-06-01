@@ -19,7 +19,7 @@ public class GUI_OfficeDocs extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("fxmlMainForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainForm.fxml"));
         
         Scene scene = new Scene(root);
         

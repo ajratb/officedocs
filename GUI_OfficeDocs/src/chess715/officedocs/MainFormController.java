@@ -6,8 +6,15 @@
 package chess715.officedocs;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.regex.PatternSyntaxException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +24,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
 
 /**
  *
@@ -47,6 +53,11 @@ public class MainFormController implements Initializable {
     private Label lbPath;
 
     private String path = "";
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        accordion.setExpandedPane(titledPanePath);
+    }
 
     @FXML
     void handleBtnSetDirectory(ActionEvent event) {
@@ -59,6 +70,9 @@ public class MainFormController implements Initializable {
         try {
             path = dirChooser.showDialog(lbPath.getScene().getWindow()).getPath();
             lbPath.setText(path);
+            boolean structured=structureDocs(path);
+            if(structured)indexDocs();
+            
         } catch (NullPointerException e) {
         }
 
@@ -66,13 +80,27 @@ public class MainFormController implements Initializable {
 
     @FXML
     void handleBtnSearch(ActionEvent event) {
-
+        SearchResultForm dialog = new SearchResultForm(btnSearch.getParent(),null);
+        dialog.showAndWait();
+    }
+    
+    private boolean structureDocs(String path) {
+        //1. если нет папки "StructuredDocs", то создаём
+        Path dir=Paths.get(path);
+        try(DirectoryStream<Path> stream=Files.newDirectoryStream(dir, "*.pdf")){
+            for(Path file:stream){
+                System.out.println(file.getFileName());
+            }
+        }catch(PatternSyntaxException|DirectoryIteratorException|IOException ex){
+            System.err.println(ex);
+        }
+        //2. каждый файл из выбранной папки прогоняем через тику
+        return false;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        accordion.setExpandedPane(titledPanePath);
+    private void indexDocs() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
 }
