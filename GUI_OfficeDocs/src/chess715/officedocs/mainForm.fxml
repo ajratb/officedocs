@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -32,6 +33,11 @@
                      <children>
                         <TextField fx:id="txtSearch" layoutX="15.0" layoutY="25.0" prefHeight="31.0" prefWidth="338.0" />
                         <Button fx:id="btnSearch" layoutX="15.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleBtnSearch" prefHeight="31.0" prefWidth="114.0" text="Найти" />
+                        <Label fx:id="lbSearchWarning" alignment="TOP_RIGHT" layoutX="160.0" layoutY="60.0" prefHeight="57.0" prefWidth="193.0" text="warning" textAlignment="RIGHT" textFill="#f80707" wrapText="true">
+                           <font>
+                              <Font name="System Italic" size="15.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>
