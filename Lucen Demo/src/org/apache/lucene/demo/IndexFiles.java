@@ -16,7 +16,6 @@
  */
 package org.apache.lucene.demo;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,7 +84,7 @@ public class IndexFiles {
       System.exit(1);
     }
     
-    Date start = new Date();
+   
     try {
       System.out.println("Indexing to directory '" + indexPath + "'...");
 
@@ -121,7 +120,7 @@ public class IndexFiles {
       // writer.forceMerge(1);
 
       writer.close();
-
+ Date start = new Date();
       Date end = new Date();
       System.out.println(end.getTime() - start.getTime() + " total milliseconds");
 
