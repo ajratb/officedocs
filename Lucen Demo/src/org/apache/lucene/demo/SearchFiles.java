@@ -66,10 +66,14 @@ public class SearchFiles {
       } else if ("-field".equals(args[i])) {
         field = args[i+1];
         i++;
-      } else if ("-queries".equals(args[i])) {
+      } 
+      //
+      else if ("-queries".equals(args[i])) {
         queries = args[i+1];
         i++;
-      } else if ("-query".equals(args[i])) {
+      } 
+      //
+      else if ("-query".equals(args[i])) {
         queryString = args[i+1];
         i++;
       } else if ("-repeat".equals(args[i])) {
