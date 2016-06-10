@@ -131,13 +131,13 @@ public class MainFormController implements Initializable {
 
     private void indexIt() {
         String indexPath = path + "\\Index";
-        try {
-                    FileUtils.deleteDirectory(new File(indexPath));
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        
         boolean create = true;
+        
+        final Path indexDir = Paths.get(indexPath);
+        if (Files.exists(indexDir)) {
+            create = false;
+        }
 
         final Path docDir = Paths.get(path);
         if (!Files.isReadable(docDir)) {

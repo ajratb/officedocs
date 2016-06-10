@@ -6,7 +6,9 @@
 package chess715.officedocs;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.event.HyperlinkEvent;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -45,9 +48,6 @@ public class SearchResultForm extends Stage implements Initializable {
     @FXML
     private Button btnMorePages;
 
-//    private int start;
-//
-//    private int hitsPerPage;
 
     public SearchResultForm(Parent parent, List<SearchResult> results) {
 //        start = 0;
@@ -65,17 +65,7 @@ public class SearchResultForm extends Stage implements Initializable {
         this.setTitle("Результаты поиска");
     }
 
-    /**
-     * This demonstrates a typical paging search scenario, where the search
-     * engine presents pages of size n to the user. The user can then go to the
-     * next page if interested in the next hits.
-     *
-     * When the query is executed for the first time, then only enough results
-     * are collected to fill 5 result pages. If the user wants to page beyond
-     * this limit, then the query is executed another time and all hits are
-     * collected.
-     *
-     */
+    
     public void doPagingSearch(BufferedReader in, IndexSearcher searcher, Query query,
             int hitsPerPage, boolean raw, boolean interactive) throws IOException {
 
@@ -84,33 +74,40 @@ public class SearchResultForm extends Stage implements Initializable {
         // Collect enough docs to show 5 pages
         TopDocs results = searcher.search(query, 5 * hitsPerPage);
         ScoreDoc[] hits = results.scoreDocs;
-
+        searcher.doc(start).getFields();
         int numTotalHits = results.totalHits;
         textArea.setText(numTotalHits + " total matching documents \n");
         
         int end = Math.min(numTotalHits, hitsPerPage);
 
         while (true) {
-            //если результатов несколько страниц, то просто активна кнопка "Ещё"
-//            if (end > hits.length) {
-//                textArea.setText("Only results 1 - " + hits.length + " of "
-//                        + numTotalHits + " total matching documents collected. \n");
-//                //textArea.setText("Collect more (y/n) ?");
-//                btnMorePages.setDisable(false);
-//
-//                hits = searcher.search(query, numTotalHits).scoreDocs;
-//            }
 
             end = Math.min(hits.length, start + hitsPerPage);
 
             for (int i = start; i < end; i++) {
-//                if (raw) {                              // output raw format
-//                    textArea.setText("doc=" + hits[i].doc + " score=" + hits[i].score);
-//                    continue;
-//                }
 
                 Document doc = searcher.doc(hits[i].doc);
+                for(IndexableField f:doc.getFields()){
+                    System.out.println("Name: "+f.name()+
+                            " -stringValue: "+f.stringValue()+
+                            " toString: "+f.toString()
+                            );
+                }
+                
+//                int contents=doc.getField("contents").binaryValue().bytes.length;//.readerValue();
+                
+                
+                
+//                while(r.read()!=-1){
+//                    
+//                    contents.concat(String.valueOf(r.read()));
+//                    
+//                }
+                
+//                System.out.println(contents);
+                
                 String path = doc.get("path");
+                
                 if (path != null) {
                     textArea.appendText((i + 1) + ". " + path + "\n");
                     String title = doc.get("title");
@@ -127,31 +124,14 @@ public class SearchResultForm extends Stage implements Initializable {
                 break;
             }
 
-            if (numTotalHits >= end) {
-               
-
-//                    System.out.print("Press ");
+            if (numTotalHits >= end) {              
                 if (start - hitsPerPage >= 0) {
                     btnPrevPage.setDisable(false);
                 }
                 if (start + hitsPerPage < numTotalHits) {
                     btnNextPage.setDisable(false);
                 }
-//                    System.out.println("(q)uit or enter number to jump to a page.");
 
-//                    String line = in.readLine();
-//                    if (line.length() == 0 || line.charAt(0) == 'q') {
-//                        quit = true;
-//                        break;
-//                    }
-                //Переход на страницу
-//                        int page = Integer.parseInt(line);
-//                        if ((page - 1) * hitsPerPage < numTotalHits) {
-//                            start = (page - 1) * hitsPerPage;
-//                            break;
-//                        } else {
-//                            System.out.println("No such page");
-//                        }
             }
 
             break;
@@ -160,32 +140,6 @@ public class SearchResultForm extends Stage implements Initializable {
         end = Math.min(numTotalHits, start + hitsPerPage);
         showAndWait();
     }
-
-
-//        btnNextPage.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-//            @Override
-//        public void handle(ActionEvent event) {
-//                if (start + hitsPerPage < numTotalHits) {
-//                            start += hitsPerPage;
-//                        }
-//            }
-//        });
-//
-//        btnPrevPage.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-//            @Override
-//        public void handle(ActionEvent event) {
-//                start = Math.max(0, start - hitsPerPage);
-//            }
-//        });
-//
-//        btnMorePages.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-//            @Override
-//        public void handle(ActionEvent event) {
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//            }
-//        });
-
-        
 
     @Override
         public void initialize(URL location, ResourceBundle resources) {

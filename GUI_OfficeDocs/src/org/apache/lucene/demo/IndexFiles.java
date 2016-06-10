@@ -24,13 +24,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Date;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -38,10 +34,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 
 /**
  * Index all text files under a directory.
@@ -49,8 +42,7 @@ import org.apache.lucene.store.FSDirectory;
  * This is a command-line application demonstrating simple Lucene indexing. Run
  * it with no command-line arguments for usage information.
  */
-public class IndexFiles {
-    
+public class IndexFiles {    
     /**
      * Indexes the given file using the given writer, or if a directory is
      * given, recurses over files and directories found under the given
@@ -94,7 +86,7 @@ public class IndexFiles {
         try (InputStream stream = Files.newInputStream(file)) {
             // make a new, empty document
             Document doc = new Document();
-
+            
             // Add the path of the file as a field named "path".  Use a
             // field that is indexed (i.e. searchable), but don't tokenize 
             // the field into separate words and don't index term frequency
@@ -115,6 +107,7 @@ public class IndexFiles {
             // so that the text of the file is tokenized and indexed, but not stored.
             // Note that FileReader expects the file to be in UTF-8 encoding.
             // If that's not the case searching for special characters will fail.
+            
             doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
 
             if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
