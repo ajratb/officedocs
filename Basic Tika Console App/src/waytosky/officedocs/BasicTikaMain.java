@@ -24,7 +24,7 @@ public class BasicTikaMain {
         // TODO code application logic here
         Examples examples=new Examples();
         try {
-            System.out.println(examples.parseToStringExample());
+            System.out.println(examples.parseExample());
         } catch (IOException ex) {
             Logger.getLogger(BasicTikaMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
