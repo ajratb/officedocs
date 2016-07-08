@@ -119,6 +119,7 @@ public class IndexFiles {
                 // we use updateDocument instead to replace the old one matching the exact 
                 // path, if present:
                 System.out.println("updating " + file);
+//                writer.deleteDocuments(new Term("path", file.toString()));
                 writer.updateDocument(new Term("path", file.toString()), doc);
             }
         }

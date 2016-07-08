@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.stage.DirectoryChooser;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
@@ -76,6 +77,9 @@ public class MainFormController implements Initializable {
     @FXML
     private Label lbSearchWarning;
 
+    @FXML
+    private CheckBox checkUpdateIndex;
+
     private String path = "";
 
     @Override
@@ -99,7 +103,7 @@ public class MainFormController implements Initializable {
             boolean structured = structureDocs(path);
             if (structured) {
                 String indexPath = path + "\\Index";
-                
+
                 indexIt();
             }
             titledPaneSearch.setCollapsible(true);
@@ -130,64 +134,68 @@ public class MainFormController implements Initializable {
     }
 
     private void indexIt() {
-        String indexPath = path + "\\Index";
-        
+        String indexPath = Paths.get(path).getParent().toString() + "\\Index";
+
         boolean create = true;
-        
+
         final Path indexDir = Paths.get(indexPath);
         if (Files.exists(indexDir)) {
             create = false;
+            System.out.println("create=false");
         }
 
         final Path docDir = Paths.get(path);
+        //For breaking method if docDir is not available
+        boolean next = true;
         if (!Files.isReadable(docDir)) {
             System.out.println("Document directory '" + docDir.toAbsolutePath() + "' does not exist or is not readable, please check the path");
-            System.exit(1);
+            next = false;
         }
+        if (next) {
+            Date start = new Date();
+            try {
+                System.out.println("Indexing to directory '" + indexPath + "'...");
 
-        Date start = new Date();
-        try {
-            System.out.println("Indexing to directory '" + indexPath + "'...");
+                Directory dir = FSDirectory.open(Paths.get(indexPath));
+                Analyzer analyzer = new StandardAnalyzer();
+                IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
-            Directory dir = FSDirectory.open(Paths.get(indexPath));
-            Analyzer analyzer = new StandardAnalyzer();
-            IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+                if (create) {
+                    // Create a new index in the directory, removing any
+                    // previously indexed documents:
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+                } else {
+                    // Add new documents to an existing index:
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+                    System.out.println("CREATE_OR_APPEND");
+                }
 
-            if (create) {
-                // Create a new index in the directory, removing any
-                // previously indexed documents:
-                iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-            } else {
-                // Add new documents to an existing index:
-                iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+                // Optional: for better indexing performance, if you
+                // are indexing many documents, increase the RAM
+                // buffer.  But if you do this, increase the max heap
+                // size to the JVM (eg add -Xmx512m or -Xmx1g):
+                //
+                // iwc.setRAMBufferSizeMB(256.0);
+                IndexWriter writer = new IndexWriter(dir, iwc);
+                IndexFiles.indexDocs(writer, docDir);
+
+                // NOTE: if you want to maximize search performance,
+                // you can optionally call forceMerge here.  This can be
+                // a terribly costly operation, so generally it's only
+                // worth it when your index is relatively static (ie
+                // you're done adding documents to it):
+                //
+                // writer.forceMerge(1);
+                writer.close();
+
+                Date end = new Date();
+                System.out.println(end.getTime() - start.getTime() + " total milliseconds");
+
+            } catch (IOException e) {
+                System.out.println(" caught a " + e.getClass()
+                        + "\n with message: " + e.getMessage());
             }
-
-            // Optional: for better indexing performance, if you
-            // are indexing many documents, increase the RAM
-            // buffer.  But if you do this, increase the max heap
-            // size to the JVM (eg add -Xmx512m or -Xmx1g):
-            //
-            // iwc.setRAMBufferSizeMB(256.0);
-            IndexWriter writer = new IndexWriter(dir, iwc);
-            IndexFiles.indexDocs(writer, docDir);
-
-            // NOTE: if you want to maximize search performance,
-            // you can optionally call forceMerge here.  This can be
-            // a terribly costly operation, so generally it's only
-            // worth it when your index is relatively static (ie
-            // you're done adding documents to it):
-            //
-            // writer.forceMerge(1);
-            writer.close();
-
-            Date end = new Date();
-            System.out.println(end.getTime() - start.getTime() + " total milliseconds");
-
-        } catch (IOException e) {
-            System.out.println(" caught a " + e.getClass()
-                    + "\n with message: " + e.getMessage());
         }
-
         lbPath.setText(path + "\n indexed");
     }
 
@@ -213,7 +221,7 @@ public class MainFormController implements Initializable {
             in = new BufferedReader(new InputStreamReader(System.in, Charset.forName("Windows-1251")));
             QueryParser parser = new QueryParser(field, analyzer);
             while (true) {
-                
+
                 if (txtSearch.getText().equals("")) {
                     lbSearchWarning.setText("Введите строку поиска");
                 }
@@ -248,11 +256,11 @@ public class MainFormController implements Initializable {
 
                     dialog.doPagingSearch(in, searcher, query, hitsPerPage,
                             raw, true);
-                    
+
                     txtSearch.setText("");
 
 //                    if (queryString != null) {
-                        break;
+                    break;
 //                    }
                 } catch (ParseException ex) {
                     Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);

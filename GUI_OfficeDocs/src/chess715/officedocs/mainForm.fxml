@@ -23,6 +23,11 @@
                      <children>
                           <Button fx:id="btnSetDirectory" layoutX="237.0" layoutY="84.0" onAction="#handleBtnSetDirectory" text="Указать папку" />
                           <Label fx:id="lbPath" layoutX="22.0" layoutY="14.0" minHeight="16" minWidth="69" text="Выберите папку для поиска" wrapText="true" />
+                        <CheckBox fx:id="checkUpdateIndex" layoutX="14.0" layoutY="105.0" mnemonicParsing="false" text="Обновлять индексы">
+                           <font>
+                              <Font name="System Italic" size="15.0" />
+                           </font>
+                        </CheckBox>
                      </children>
                   </AnchorPane>
             </content>
