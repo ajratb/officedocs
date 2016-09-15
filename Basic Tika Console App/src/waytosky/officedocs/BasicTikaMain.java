@@ -23,8 +23,9 @@ public class BasicTikaMain {
     public static void main(String[] args) {
         // TODO code application logic here
         Examples examples=new Examples();
+        String resource="SampleChapter-8.pdf";
         try {
-            System.out.println(examples.parseExample());
+            System.out.println(examples.parseToHTML(resource));
         } catch (IOException ex) {
             Logger.getLogger(BasicTikaMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -32,5 +33,8 @@ public class BasicTikaMain {
         } catch (TikaException ex) {
             Logger.getLogger(BasicTikaMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+//catch (NullPointerException ex) {
+//            Logger.getLogger(BasicTikaMain.class.getName()).log(Level.INFO, "ebs", ex);
+//        }
     }    
 }

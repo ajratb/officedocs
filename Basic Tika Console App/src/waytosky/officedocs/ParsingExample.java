@@ -1,18 +1,8 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * 
+ * Скопировано из Apache Tika examples 
+ * последний метод закоментирован так как отсутствует нужный класс
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 package waytosky.officedocs;
@@ -40,57 +30,17 @@ import org.apache.tika.sax.ContentHandlerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+     * 
+     * Скопировано из Apache Tika examples
+     * 
+*/
 public class ParsingExample {
-
+    
+    
     /**
-     * Example of how to use Tika's parseToString method to parse the content of a file,
-     * and return any text found.
-     * <p>
-     * Note: Tika.parseToString() will extract content from the outer container
-     * document and any embedded/attached documents.
-     *
-     * @return The content of a file.
+     * Стёр то что дублируется в примере
      */
-    public String parseToStringExample() throws IOException, SAXException, TikaException {
-        Tika tika = new Tika();
-        try (InputStream stream = ParsingExample.class.getResourceAsStream("test.doc")) {
-            return tika.parseToString(stream);
-        }
-    }
-
-    /**
-     * Example of how to use Tika to parse a file when you do not know its file type
-     * ahead of time.
-     * <p>
-     * AutoDetectParser attempts to discover the file's type automatically, then call
-     * the exact Parser built for that file type.
-     * <p>
-     * The stream to be parsed by the Parser. In this case, we get a file from the
-     * resources folder of this project.
-     * <p>
-     * Handlers are used to get the exact information you want out of the host of
-     * information gathered by Parsers. The body content handler, intuitively, extracts
-     * everything that would go between HTML body tags.
-     * <p>
-     * The Metadata object will be filled by the Parser with Metadata discovered about
-     * the file being parsed.
-     * <p>
-     * Note: This example will extract content from the outer document and all
-     * embedded documents.  However, if you choose to use a {@link ParseContext},
-     * make sure to set a {@link Parser} or else embedded content will not be
-     * parsed.
-     *
-     * @return The content of a file.
-     */
-    public String parseExample() throws IOException, SAXException, TikaException {
-        AutoDetectParser parser = new AutoDetectParser();
-        BodyContentHandler handler = new BodyContentHandler();
-        Metadata metadata = new Metadata();
-        try (InputStream stream = ParsingExample.class.getResourceAsStream("test.doc")) {
-            parser.parse(stream, handler, metadata);
-            return handler.toString();
-        }
-    }
 
     /**
      * If you don't want content from embedded documents, send in
