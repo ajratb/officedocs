@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="textArea" layoutX="14.0" layoutY="16.0" prefHeight="384.0" prefWidth="346.0" />
+      <Button fx:id="btnPrevPage" disable="true" layoutX="14.0" layoutY="417.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="&lt;-" />
+      <Button fx:id="btnMorePages" disable="true" layoutX="120.0" layoutY="417.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="Ещё..." />
+      <Button fx:id="btnNextPage" disable="true" layoutX="285.0" layoutY="417.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="-&gt;" />
+   </children>
+</AnchorPane>
