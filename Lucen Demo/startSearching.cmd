@@ -1,2 +1,0 @@
-java -cp build/classes;dist/lib/lucene-queryparser-6.0.0.jar;dist/lib/lucene-demo-6.0.0.jar;dist/lib/lucene-core-6.0.0.jar;dist/lib/lucene-analyzers-common-6.0.0.jar org.apache.lucene.demo.SearchFiles
-pause
