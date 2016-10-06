@@ -21,9 +21,13 @@ public class BasicTikaMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        new EncodingDetection();
+
+        System.out.println(EncodingDetection.getADR().getCharset().name());
+        
         Examples examples=new Examples();
-        String resource="SampleChapter-8.pdf";
+        String resource="./docs/SampleChapter-8.pdf";
         try {
             System.out.println(examples.parseToHTML(resource));
         } catch (IOException ex) {

@@ -3,6 +3,7 @@
  */
 package waytosky.officedocs;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.tika.Tika;
@@ -60,7 +61,7 @@ public class Examples {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         //Here was ParsingExample class
-        try (InputStream stream = Examples.class.getResourceAsStream(resource)) {
+        try (InputStream stream = new FileInputStream(resource)) {
             parser.parse(stream, handler, metadata);
             return handler.toString();
         }
@@ -98,7 +99,7 @@ public class Examples {
         AutoDetectParser parser = new AutoDetectParser();
         Metadata metadata = new Metadata();
         //Here was ContentHandlerExample class
-        try (InputStream stream = Examples.class.getResourceAsStream(resource)) {
+        try (InputStream stream = new FileInputStream(resource)) {
             parser.parse(stream, handler, metadata);
             return handler.toString();
         }
