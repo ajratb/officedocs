@@ -54,12 +54,7 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="354.0" prefWidth="261.0">
-                                 <columns>
-                                    <TableColumn fx:id="docFieldColumn" prefWidth="84.0" text="Поле" />
-                                    <TableColumn fx:id="fieldValueColumn" maxWidth="1.7976931348623157E308" prefWidth="180.0" text="Значение" />
-                                 </columns>
-                              </TableView>
+                              <TextArea fx:id="txtContext" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </GridPane>
                     </items>

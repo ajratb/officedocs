@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.util.Callback;
@@ -52,6 +53,10 @@ public class MainController implements Initializable {
     private TableColumn<Document, String> docPathColumn;
     @FXML
     private TableColumn searchWeightColumn;
+
+    @FXML
+    private TextArea txtContext;
+
     @FXML
     private TableColumn<Document, String> docNumberColumn;
 //       @FXML
@@ -102,28 +107,35 @@ public class MainController implements Initializable {
             alert.showAndWait();
             System.exit(0);
         }
-        
+
         //если папки индекс нет, то создаём
         Path indexPath = Paths.get(indexDir);
         if (!Files.exists(indexPath)) {
             try {
                 Files.createFile(indexPath);
             } catch (IOException ex) {
-                LOG.error("", ex);
+                LOG.error("Ошибка создания папки Index", ex);
             }
         }
-        
+
         //очищаем папку index
         try {
             NIO2Utils.deleteDirectoryContent(indexDir);
         } catch (IOException ex) {
-            showWarningAlert("При удалении папки возникли проблемы", "Возможно "
+            showWarningAlert("При удалении папки(Index) возникли проблемы", "Возможно "
                     + "содержимое папки заблокировано сторонней программой");
-            LOG.error("Ошибка удаления папки index: ", ex);
+            LOG.error("Ошибка удаления папки Index: ", ex);
         }
-        
+
         //индексируем папку docs
-       IndexFiles.startIndexDocs(indexDir, true, docsDir);
+        IndexFiles.startIndexDocs(indexDir, true, docsDir);
+
+        tableDocs.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+//                System.out.println("im here");
+                txtContext.setText(obs.getValue().get("path"));
+            }
+        });
     }
 
     /**
