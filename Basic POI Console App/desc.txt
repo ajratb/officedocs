@@ -1,3 +1,3 @@
-добавил файлы из примеров.
-поработал с 
-\org\apache\poi\xwpf\ SimpleDocument
+примеры можно скачать с библиотеками.
+
+tutorialspoint.com/apache_poi_word/
