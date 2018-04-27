@@ -29,13 +29,14 @@ public class TwainStudy {
                         TwainConstants.ICAP_SUPPORTEDSIZES, TwainConstants.TWSS_USLETTER)
                 .addOutputItem(
                         new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_JPG)
-                        .setSavePath(".\\${TMS}${EXT}") // Timestamp as file name
+                                .setSavePath(".\\${TMS}${EXT}") // Timestamp as file name
                 )
                 .addOutputItem(
                         new RequestOutputItem(Imaging.OUTPUT_SAVE_THUMB,
                                 Imaging.FORMAT_JPG).setSavePath(".\\${TMS}-thumb${EXT}")
                 )
         ).showDialog(null, "Scan", true, null); // owner can be null
+        
     }
 
 }

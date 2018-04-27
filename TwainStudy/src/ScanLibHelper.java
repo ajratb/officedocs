@@ -107,16 +107,16 @@ public class ScanLibHelper {
         System.setProperty("ASPRISE_IMAGING_LIB_FILE", libFile);
     }
 
-
-    public static void main(String[] args) throws IOException {
-        if(args.length < 1) {
-            System.out.println("Usage: java com.asprise.ocr.util.OcrLibHelper PATH_TO_LIB_FILE");
-
-        }
-        String libFile = "";
-
-        System.out.println("Version: " + loadDllAndReturnVersion("D:\\JavaTools\\asprise_imaging_x64.dll"));
-    }
+//
+//    public static void main(String[] args) throws IOException {
+//        if(args.length < 1) {
+//            System.out.println("Usage: java com.asprise.ocr.util.OcrLibHelper PATH_TO_LIB_FILE");
+//
+//        }
+//        String libFile = "";
+//
+//        System.out.println("Version: " + loadDllAndReturnVersion("D:\\JavaTools\\asprise_imaging_x64.dll"));
+//    }
 
     public static void log(String s) {
         if(shouldPrintLog()) {
