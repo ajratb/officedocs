@@ -1,31 +1,33 @@
-/Basic POI Console App/nbproject/private/
-/Basic POI Console App/build/
-/Basic Tika Console App/nbproject/private/
-/Lucen Demo/nbproject/private/
-/Basic Tika Console App/build/
-/Basic Tika Console App/dist/
-/Tika Parent/target/
-/Lucen Demo/build/
-/Lucen Demo/dist/
-/GUI_OfficeDocs/nbproject/private/
-/GUI_OfficeDocs/build/
-/GUI_OfficeDocs/dist/
-/SearchDocsGUI/nbproject/private/
+/**/build/
+/**/nbproject/private/
+/**/dist/
+/**/target/
+
 /Lucen Demo/files/
 /Lucen Demo/index/
-/Lucene_Tika_JavaFx_Application/nbproject/private/
-/Lucene_Tika_JavaFx_Application/build/
-/Lucene_Tika_JavaFx_Application/dist/
 /Lucene_Tika_JavaFx_Application/index/
-/Lucene_Tika_JavaFx_Application/dist/
-/Lucene_Tika_JavaFx_Application/build/
-/ZXingBarcodeStudy/nbproject/private/
-/ZXingBarcodeStudy/target/
-/JASPER_REPORTS/Jasper-FirstMavenAttempt/target/
-/iText Study/nbproject/private/
-/iText Study/build/
-/iText Study/dist/
-/TwainStudy/nbproject/private/
-/TwainStudy/build/
-/TwainStudy/dist/
-/JASPER_REPORTS/jasper-simple/.nb-gradle/
+
+
+/**/.nb-gradle/
+# Netbeans
+/**/.nb-gradle/
+/**/build/
+/**/nbproject/private/
+/**/dist/
+/**/bin/
+
+# Maven
+/**/log/
+/**/target/
+
+# Intellij
+/**/.idea/
+*.iml
+*.iws
+/**/jdbc/*.jar
+
+/**/out/
+/**/.gradle/
+/**/gradlew
+/**/gradlew.bat
+/**/gradle/
