@@ -31,10 +31,10 @@ public class AutoScaledImage {
             System.out.println("in " + timesTaller + " times taller");
         }
 
-        if (timesWider - timesTaller > 0.01) {
+        if (timesWider - timesTaller > 0.001) {
             System.out.println("WIDER!");
             startPos[1] = calculateYHigherPos();//calculateYPos();
-        } else if (timesTaller - timesWider > 0.01) {
+        } else if (timesTaller - timesWider > 0.001) {
             System.out.println("TALLER!");
             startPos[0] = calculateXPos();
         } else {
